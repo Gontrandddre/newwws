@@ -1,0 +1,114 @@
+{% extends 'newwws_app/layouts/base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+
+
+<!-- Masthead-->
+<header class="masthead" style="padding:10%">
+    <div class="container mt-5">
+        <div class="masthead-subheading">Your daily newwws !</div>
+        {% if messages %}
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} my-4 text-center" role="alert" style="width:600px">
+                {{message}}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</header>
+
+<!-- Page content-->
+<div class="container">
+    <div class="row">
+        
+        {% include 'newwws_app/layouts/feed_articles.html' with nameUrlpattern='newwws_app:news' %}
+
+        <!-- Side widgets-->
+        <div class="col-md-4">
+            <form method="POST" href="{% url 'newwws_app:news' %}">
+            {% csrf_token %}
+                <!-- Search widget-->
+                <div class="card my-4">
+                    <h5 class="card-header">Search</h5>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input id="querySearch" name="search" class="form-control" type="text" placeholder="Key word..." value="{{value_input}}" />
+                        </div>
+                    </div>
+                </div>
+                <!-- Categories widget-->
+                <div class="card my-4">
+                    <h5 class="card-header">Categories</h5>
+                    <div class="card-body">
+                        <div class="row d-flex flex-column justify-content-around align-items-start ml-2">
+                            {% for category in CATEGORIES %}
+                                <div class="form-check">
+                                    <input id="queryCategory" class="form-check-input" type="radio" name="category" id="{{category}}" value="{{category}}">
+                                    <label class="form-check-label" for="{{category}}">
+                                        {% if category == "generalhealth" %}
+                                            General health
+                                        {% else %}
+                                            {{ category|title}}
+                                        {% endif %} 
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <!-- Languages widget-->
+                <div class="card my-4">
+                    <h5 class="card-header">Languages</h5>
+                    <div class="card-body">
+                        <div class="row d-flex flex-column justify-content-around align-items-start ml-2">
+                            {% for language in LANGUAGES %}
+                                <div class="form-check">
+                                    <input id="queryLanguage" class="form-check-input" type="radio" name="language" id="{{language}}" value="{{language}}">
+                                    <label class="form-check-label" for="{{language}}">
+                                        {% if language == 'ar' %}
+                                            Arabic
+                                        {% elif language == 'de' %}
+                                            German
+                                        {% elif language == 'en' %}
+                                            English
+                                        {% elif language == 'es' %}
+                                            Spanish
+                                        {% elif language == 'fr' %}
+                                            French
+                                        {% elif language == 'he' %}
+                                            Hebrew
+                                        {% elif language == 'it' %}
+                                            Italian
+                                        {% elif language == 'nl' %}
+                                            Dutch
+                                        {% elif language == 'pt' %}
+                                            Portuguese
+                                        {% elif language == 'ru' %}
+                                            Russian
+                                        {% elif language == 'se' %}
+                                            Sami (Northern)
+                                        {% elif language == 'zh' %}
+                                            Chinese
+                                        {% endif %}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Side widget-->
+                <div class="card my-4">
+                    <button id="submitQuery" type="submit" class="btn btn-dark" style="background-color: #E26845; border-color:#E26845"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
