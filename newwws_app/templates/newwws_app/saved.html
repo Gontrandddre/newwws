@@ -10,98 +10,117 @@
 <header class="masthead" style="padding:5%">
     <div class="container mt-5">
         <div class="masthead-subheading">Your saved articles !</div>
+        <form method="POST" href="{% url 'newwws_app:index' %}" class="d-flex flex-column flex-lg-row justify-content-around align-items-stretch  mt-5">
+            {% csrf_token %}
+            <div class="d-flex flex-row justify-content-center align-items-center">
+                <label class="mx-2 text-left" for="querySearch" style="width:60px">Search</label>
+                <input id="querySearch" type="text" class="form-control mx-sm-3 ml-auto" name="query" placeholder="Key word ..." style="width:200px">
+            </div>
+            <span class="d-none d-lg-flex" style="font-size:60px;">&#47;</span>
+            <div>
+                <div class="d-flex flex-row justify-content-center align-items-center my-1">
+                    <label class="mx-2 text-left" for="inputFrom" style="width:60px">From</label>
+                    <input type="date" id="inputFrom_saved" name="from_param" class="form-control mx-sm-3 ml-auto" style="width:200px" >
+                </div>
+                <div class="d-flex flex-row justify-content-center align-items-center my-1">
+                    <label class="mx-2 text-left" for="inputFrom" style="width:60px">To</label>
+                    <input type="date" id="inputTo_saved" name="to" class="form-control mx-sm-3 ml-auto" style="width:200px">
+                </div>
+            </div>
+            <span class="d-none d-lg-flex" style="font-size:60px;">&#47;</span>
+            <div class="custom-control custom-switch d-flex flex-row justify-content-center align-items-center my-2">
+                <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                <label class="custom-control-label" for="customSwitch1">Only articles read</label>
+            </div>
+            <button id="submitQuery" type="submit" class="btn btn-dark align-self-center" style="background-color: #E26845; border-color:#E26845; width:50px"><i class="fas fa-search"></i></button>
+        </form>
+        {% if messages %}
+            <div class="alert-message-app d-flex flex-column justify-content-center align-items-center">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} my-4 text-center" role="alert" style="width:600px">
+                    {{message}}
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 </header>
 
 <div class="container my-4">
     <div class="row text-center">
+        {% for article in articles %}
         <div class="col-lg-3 col-md-6 mb-4">
             <div class="card h-100">
-                <img class="card-img-top" src="https://cdn.vox-cdn.com/thumbor/HNN965vthPvVe1zJsrkQHM79EPQ=/0x146:2040x1214/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/22478836/acastro_210429_1777_0004.jpg" alt="..." />
+                <img class="card-img-top" src="{{article.article.url_to_image}}" alt="..." />
                 <div class="card-body">
-                    <h4 class="card-title">TITLE</h4>
-                    <p class="card-text">DESCRIPTION</p>
-                    <a class="btn btn-primary" href="#!"><i class="fas fa-eye"></i></a>
-                    <a class="" href="#!"><i class="fas fa-trash-alt"></i></a>
-                    <a class="" href="#!"><i class="fas fa-bookmark"></i></a>
-                    <a class="mx-2" href="#!"><i class="fas fa-trash-alt fa-lg"></i></a>
-                    <a class="mx-2" href="#!"><i class="fas fa-bookmark fa-lg"></i></a>
+                    <div class="card-title overflow-auto blur-text" style="height:150px">
+                        <h4 style="margin-bottom:15%">{{article.article.title}}</h4>
+                    </div>
+                    <div class="overflow-auto blur-text card-text text-left" style="height:100px">
+                        <p style="margin-bottom:15%">{{article.article.description}}</p>
+                    </div>
+                    <hr>
+                    <p class="card-text text-left">{{article.article.published_at}}</p>
+                    <p class="card-text text-left">by {{article.article.author}}</p>
+                    <div style="margin-bottom: 0px">
+                        <div class=" d-flex flex-row justify-content-around align-items-center">
+                            <!-- View management -->
+                            <form action="{% url 'newwws_app:article' article.article.id %}" method="POST">
+                            {% csrf_token %}
+                                <input type="hidden" name="product" value="{{article.article.id}}">
+                                <button id="view-{{article.id}}" type="submit" class="btn btn-primary mx-2"><i class="fas fa-eye"></i></a>
+                            </form>
+                            
+                            <!-- Saved management -->
+                            <form action="{% url 'newwws_app:saved' %}" method="POST">
+                            {% csrf_token %}
+                                <input type="hidden" name="current_article" value="{{article.article.id}}">
+                                <input type="hidden" name="delete" value="foo">
+                                <button id="delete-{{article.id}}" type="submit" class="btn btn-danger mx-2"><i class="fas fa-trash fa-lg"></i></a>
+                            </form>
+
+                            <!-- Status read management -->
+                            <form action="{% url 'newwws_app:saved' %}" method="POST">
+                            {% csrf_token %}
+                                <input type="hidden" name="current_article" value="{{article.article.id}}">
+                                {% if article.read %}
+                                    <input type="hidden" name="read" value="False">
+                                    <button id="read-{{article.id}}" type="submit" class="btn btn-success mx-2"><i class="fas fa-bookmark fa-lg"></i></a>
+                                {% else %}
+                                    <input type="hidden" name="read" value="True">
+                                    <button id="read-{{article.id}}" type="submit" class="btn btn-secondary mx-2"><i class="fas fa-bookmark fa-lg"></i></a>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card h-100">
-                <img class="card-img-top" src="https://cdn.vox-cdn.com/thumbor/HNN965vthPvVe1zJsrkQHM79EPQ=/0x146:2040x1214/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/22478836/acastro_210429_1777_0004.jpg" alt="..." />
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-                    <a class="btn btn-primary" href="#!"><i class="fas fa-eye"></i></a>
-                    <a class="" href="#!"><i class="fas fa-trash-alt"></i></a>
-                    <a class="" href="#!"><i class="fas fa-bookmark"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card h-100">
-                <img class="card-img-top" src="https://cdn.vox-cdn.com/thumbor/HNN965vthPvVe1zJsrkQHM79EPQ=/0x146:2040x1214/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/22478836/acastro_210429_1777_0004.jpg" alt="..." />
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-                    <a class="btn btn-primary" href="#!"><i class="fas fa-eye"></i></a>
-                    <a class="" href="#!"><i class="fas fa-trash-alt"></i></a>
-                    <a class="" href="#!"><i class="fas fa-bookmark"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card h-100">
-                <img class="card-img-top" src="https://cdn.vox-cdn.com/thumbor/HNN965vthPvVe1zJsrkQHM79EPQ=/0x146:2040x1214/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/22478836/acastro_210429_1777_0004.jpg" alt="..." />
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-                    <a class="btn btn-primary" href="#!"><i class="fas fa-eye"></i></a>
-                    <a class="" href="#!"><i class="fas fa-trash-alt"></i></a>
-                    <a class="" href="#!"><i class="fas fa-bookmark"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card h-100">
-                <img class="card-img-top" src="https://cdn.vox-cdn.com/thumbor/HNN965vthPvVe1zJsrkQHM79EPQ=/0x146:2040x1214/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/22478836/acastro_210429_1777_0004.jpg" alt="..." />
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-                    <a class="btn btn-primary" href="#!"><i class="fas fa-eye"></i></a>
-                    <a class="" href="#!"><i class="fas fa-trash-alt"></i></a>
-                    <a class="" href="#!"><i class="fas fa-bookmark"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card h-100">
-                <img class="card-img-top" src="https://cdn.vox-cdn.com/thumbor/HNN965vthPvVe1zJsrkQHM79EPQ=/0x146:2040x1214/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/22478836/acastro_210429_1777_0004.jpg" alt="..." />
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-                    <a class="btn btn-primary" href="#!"><i class="fas fa-eye"></i></a>
-                    <a class="" href="#!"><i class="fas fa-trash-alt"></i></a>
-                    <a class="" href="#!"><i class="fas fa-bookmark"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card h-100">
-                <img class="card-img-top" src="https://cdn.vox-cdn.com/thumbor/HNN965vthPvVe1zJsrkQHM79EPQ=/0x146:2040x1214/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/22478836/acastro_210429_1777_0004.jpg" alt="..." />
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-                    <a class="btn btn-primary" href="#!"><i class="fas fa-eye"></i></a>
-                    <a class="" href="#!"><i class="fas fa-trash-alt"></i></a>
-                    <a class="" href="#!"><i class="fas fa-bookmark"></i></a>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
+    <div class="d-flex flex-row justify-content-around align-items-center" style="margin:5%">
+    {% if articles.has_previous %}
+        <a class="btn btn-primary" href="?page={{articles.previous_page_number}}"><i class="fas fa-arrow-circle-left"></i></a>
+    {% else %}
+        <button class="btn btn-secondary" href="" disabled><i class="fas fa-arrow-circle-left"></i></button>
+    {% endif %}
+    <div>
+    {% for item in list_pages %}
+        {% if item == current_page %}
+            <a class="mx-2 text-secondary" href="?page={{item}}">{{item}}</a>
+        {% elif not current_page and item == 1 %}
+            <a class="mx-2 text-secondary" href="?page={{item}}">{{item}}</a>
+        {% else %}
+            <a class="mx-2" href="?page={{item}}">{{item}}</a>
+        {% endif %}
+    {% endfor %}
+    </div> 
+    {% if articles.has_next %}
+        <a class="btn btn-primary" href="?page={{articles.next_page_number}}"><i class="fas fa-arrow-circle-right"></i></a>
+    {% else %}
+        <button class="btn btn-secondary" href="" disabled><i class="fas fa-arrow-circle-right"></i></button>
+    {% endif %}    
+    </div>   
 </div>
 
 {% endblock %}

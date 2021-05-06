@@ -2,11 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from .forms import CustomUserCreationForm, AuthenticationFormApp
-
-from .models import Article
+from .models import CustomUser, Article, Saved
 from .methods import ParseMode, RequestApiHeadlines, RequestApiEverything
 from .constantes import CATEGORIES, LANGUAGES, SORTBY
 
@@ -77,7 +76,7 @@ def index(request):
         elif request.POST.get('mode') == None:
             
             data = RequestApiEverything(q=input_user)
-            articles = data.articles()
+            articles = data.news()
 
             if articles['totalResults'] == 0:
                 messages.warning(request, 'No articles about it, try an other key-word.')
@@ -85,12 +84,12 @@ def index(request):
             else:
                 request.session['query'] = input_user
                 request.session['mode'] = request.POST.get('mode')
-                return redirect("newwws_app:articles")
+                return redirect("newwws_app:news")
 
         elif request.POST.get('mode') == 'on':
 
             data = RequestApiHeadlines(q=input_user)
-            articles = data.news()
+            articles = data.daily_news()
 
             if articles['totalResults'] == 0:
                 messages.warning(request, 'No recent news about it, try an other key-word or change mode.')
@@ -98,7 +97,7 @@ def index(request):
             else:
                 request.session['query'] = input_user
                 request.session['mode'] = request.POST.get('mode')
-                return redirect("newwws_app:news")
+                return redirect("newwws_app:daily_news")
         
         else:
             pass
@@ -106,103 +105,125 @@ def index(request):
     return render(request, 'newwws_app/index.html', {})
 
 
-def news(request):
+def daily_news(request):
 
     try:
-        data = RequestApiHeadlines(q=request.session['query'])
+        data = RequestApiHeadlines(q=request.session['query']).daily_news()
         value_input = request.session['query']
         
     except KeyError:
-        data = RequestApiHeadlines(q="politic")
+        data = RequestApiHeadlines(q="politic").daily_news()
         value_input = 'politic'
 
-    articles = data.news()
-    
     if request.method == 'POST':
 
         if request.POST.get('save'):
-            # data = RequestApiEverything(qintitle=request.POST.get('save'))
-            # element = data.articles()
-            
-            # Article.objects.update_or_create(
-            #             defaults={'title': element['articles'][0]['title']},
-            #             description = element['articles'][0]['description'],
-            #             author = element['articles'][0]['author'],
-            #             content = element['articles'][0]['content'],
-            #             published_at = element['articles'][0]['publishedAt'],
-            #             url = element['articles'][0]['url'],
-            #             url_to_image = element['articles'][0]['urlToImage']
-            #         )
-            
-            # article = get_object_or_404(Article, title=request.POST.get('save'))
-            # user = get_object_or_404(User, pk=1) # refacto to request.user.id
-            # user.article_set.add(article)
 
-            messages.success(request, 'Article saved ! Now available in my-news section.')
+            # Get current article data
+            item = RequestApiHeadlines(q=request.POST.get('save')).daily_news()
+            
+            # Create or update object Article
+            Article.objects.update_or_create(
+                        defaults={'title': item['articles'][0]['title']},
+                        description = item['articles'][0]['description'],
+                        author = item['articles'][0]['author'],
+                        content = item['articles'][0]['content'],
+                        published_at = item['articles'][0]['publishedAt'],
+                        url = item['articles'][0]['url'],
+                        url_to_image = item['articles'][0]['urlToImage']
+                    )
+            
+            # Search current User and Article
+            current_article = get_object_or_404(Article, title=request.POST.get('save'))
+            current_user = get_object_or_404(CustomUser, pk=request.user.id)
+            
+            # Save or not current article by current user
+            alreadySaved = Saved.objects.filter(user=current_user, article=current_article)
+            if not alreadySaved.exists():
+                saved = Saved.objects.create(
+                    user=current_user,
+                    article=current_article
+                )
+                saved.save()
+                messages.success(request, 'Article saved ! Now available in my-news section.')
+            else:
+                messages.info(request, 'You have already saved this article.')
+            
 
         if request.POST.get('search') or request.POST.get('category') or request.POST.get('language'):
             
+            # q must be None instead of empty
             if request.POST.get('search') == "":
                 q = None
             else:
                 q = request.POST.get('search') 
+
             category = request.POST.get('category')
             language = request.POST.get('language')
-            data = RequestApiHeadlines(q=q, category=category, language=language)
-            articles = data.news()
-
+            data = RequestApiHeadlines(q=q, category=category, language=language).daily_news()
+    
             value_input = request.POST.get('search')
 
-            if articles['articles'] == []:
-                messages.warning(request, 'Your request get 0 articles')
+    if data['articles'] == []:
+        messages.warning(request, 'Your request get 0 articles')
 
-    return render(request, 'newwws_app/news.html', {
-        "articles": articles['articles'],
+    return render(request, 'newwws_app/daily_news.html', {
+        "articles": data['articles'],
         "value_input": value_input,
         "CATEGORIES": CATEGORIES,
         "LANGUAGES": LANGUAGES,
     })
 
-def articles(request):
+def news(request):
 
     try:
-        data = RequestApiEverything(q=request.session['query'])
+        data = RequestApiEverything(q=request.session['query']).news()
         value_input = request.session['query']
         
     except KeyError:
-        data = RequestApiEverything(q="politic")
+        data = RequestApiEverything(q="politic").news()
         value_input = 'politic'
-
-    articles = data.articles()
 
     if request.method == 'POST':
 
         if request.POST.get('save'):
-            # data = RequestApiEverything(qintitle=request.POST.get('save'))
-            # element = data.articles()
-            
-            # Article.objects.update_or_create(
-            #             defaults={'title': element['articles'][0]['title']},
-            #             description = element['articles'][0]['description'],
-            #             author = element['articles'][0]['author'],
-            #             content = element['articles'][0]['content'],
-            #             published_at = element['articles'][0]['publishedAt'],
-            #             url = element['articles'][0]['url'],
-            #             url_to_image = element['articles'][0]['urlToImage']
-            #         )
-            
-            # article = get_object_or_404(Article, title=request.POST.get('save'))
-            # user = get_object_or_404(User, pk=1) # refacto to request.user.id
-            # user.article_set.add(article)
 
-            messages.success(request, 'Article saved ! Now available in my-news section.')
+            # Get current article data
+            item = RequestApiEverything(q=request.POST.get('save')).news()
+            
+            # Create or update object Article
+            Article.objects.update_or_create(
+                        defaults={'title': item['articles'][0]['title']},
+                        description = item['articles'][0]['description'],
+                        author = item['articles'][0]['author'],
+                        content = item['articles'][0]['content'],
+                        published_at = item['articles'][0]['publishedAt'],
+                        url = item['articles'][0]['url'],
+                        url_to_image = item['articles'][0]['urlToImage']
+                    )
+            
+            # Search current User and Article
+            current_article = get_object_or_404(Article, title=request.POST.get('save'))
+            current_user = get_object_or_404(CustomUser, pk=request.user.id)
+            
+            # Save or not current article by current user
+            alreadySaved = Saved.objects.filter(user=current_user, article=current_article)
+            if not alreadySaved.exists():
+                saved = Saved.objects.create(
+                    user=current_user,
+                    article=current_article
+                )
+                saved.save()
+                messages.success(request, 'Article saved ! Now available in my-news section.')
+            else:
+                messages.info(request, 'You have already saved this article.')
         
         if request.POST.get('search') or request.POST.get('category') or request.POST.get('language'):
             
             q = request.POST.get('search')
             language = request.POST.get('language')
 
-            # premium access
+            # premium access only
             try: 
                 from_param = datetime.strptime(
                     request.POST.get('from_param'),
@@ -216,29 +237,109 @@ def articles(request):
                 from_param = None
                 to = None
 
-            data = RequestApiEverything(q=q, language=language, from_param=from_param, to=to)
-            articles = data.articles()
+            data = RequestApiEverything(q=q, language=language, from_param=from_param, to=to).news()
 
             value_input = request.POST.get('search')
 
-            if articles['articles'] == []:
-                    messages.warning(request, 'Your request get 0 article.')
+    if data['articles'] == []:
+        messages.warning(request, 'Your request get 0 article.')
 
-    print(type(articles['articles'][0]['publishedAt']))
-    return render(request, 'newwws_app/articles.html', {
-        "articles": articles['articles'],
+    return render(request, 'newwws_app/news.html', {
+        "articles": data['articles'],
         "value_input": value_input,
         "SORTBY": SORTBY,
         "LANGUAGES": LANGUAGES,
     })
 
 @login_required(login_url="login")
-def article(request):
-    return render(request, 'newwws_app/article.html', {})
+def saved(request):
+    
+    data = Saved.objects.filter(user=request.user.id)
+    current_user = get_object_or_404(CustomUser, pk=request.user.id)
+
+    if request.method == 'POST':
+
+        if request.POST.get('read'):
+
+            current_article = request.POST.get('current_article')
+            read_status = request.POST.get('read')
+            update_saved_current_article = data.get(
+                                                article=current_article,
+                                            )
+            update_saved_current_article.read = read_status
+            update_saved_current_article.save()
+            data = data
+
+            messages.success(request, "Article read.")
+
+        if request.POST.get('delete'):
+            
+            current_article = request.POST.get('current_article')
+            delete_current_article = data.get(
+                                                article=current_article,
+                                            )
+            delete_current_article.delete()
+            data = data
+
+            messages.success(request, "Article deleted.")
+
+        # elif request.POST.get('search') or \
+        #      request.POST.get('form_param') or \
+        #      request.POST.get('to') or \
+        #      request.POST.get('read_param') or \
+
+        #     data = data.filter(
+        #                 tilte__contains=request.POST.get('search'),
+        #                 publiashedAt__time__range=(
+        #                     datetime.time(request.POST.get('form_param'),
+        #                     datetime.time(request.POST.get('to'))
+        #                 ),
+        #                 read=request.POST.get('read_param')
+        #             )
+    
+    if data.count() == 0:
+        messages.warning(request, "Not article saved.")
+    
+    else:
+        paginator = Paginator(data, 8)
+        page = request.GET.get("page")
+        list_pages = [*range(1, (paginator.num_pages)+1, 1)]
+
+        try:
+            data = paginator.page(page)
+        except PageNotAnInteger:
+            data = paginator.page(1)
+        except EmptyPage:
+            data = paginator.page(paginator.num_pages)
+
+    return render(request, 'newwws_app/saved.html', {
+        "articles": data,
+        "list_pages": list_pages,
+        "current_page": page,
+    })
 
 @login_required(login_url="login")
-def saved(request):
-    return render(request, 'newwws_app/saved.html', {})
+def article(request, id_article):
+
+    data = Saved.objects.get(article=id_article)
+
+    if request.POST.get('read'):
+
+            current_article = request.POST.get('current_article')
+            read_status = request.POST.get('read')
+            update_saved_current_article = data.get(
+                                                article=current_article,
+                                            )
+            update_saved_current_article.read = read_status
+            update_saved_current_article.save()
+            data = data
+
+            messages.success(request, "Article read.")
+    
+
+    return render(request, 'newwws_app/article.html', {
+        "article": data,
+    })
 
 @login_required(login_url="login")
 def account(request):

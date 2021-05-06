@@ -10,10 +10,10 @@ app_name = "newwws_app"
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("daily-news", views.daily_news, name="daily_news"),
+    re_path(r"^article/(?P<id_article>[^/]+)$", views.article, name="article"),
+    path("my-news", views.saved, name="saved"),
     path("news", views.news, name="news"),
-    path("article", views.article, name="article"),
-    path("saved", views.saved, name="saved"),
-    path("articles", views.articles, name="articles"),
     path("account", views.account, name="account"),
     path("legal-notice", TemplateView.as_view(template_name="newwws_app/legal_notices.html"), name="legal-notice"),
 ]

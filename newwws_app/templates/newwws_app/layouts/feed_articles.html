@@ -33,7 +33,7 @@
                                                     <h1 class="col-lg-0 mt-4">{{article.title}}</h1>
                                                     <!-- save article -->
                                                     {% if user.is_authenticated %}
-                                                        <form action="{% url nameUrlpattern %}" method="POST">
+                                                        <form action="{% url nameUrlPattern %}" method="POST">
                                                             {% csrf_token %}
                                                             <input type="hidden" name="save" value="{{article.title}}">
                                                             <button id="save-{{article.title}}" type="submit" class="btn btn-success mx-2"><i class="fas fa-save fa-lg"></i></a>
@@ -67,7 +67,7 @@
                     {% endif %}
                     <a class="btn btn-info rounded-circle mx-2 featureArticle" href="{{article.url}}" target="_blank"><i class="fas fa-mouse-pointer fa-lg"></i></a>
                     {% if user.is_authenticated %}
-                        <form action="{% url nameUrlpattern %}" method="POST">
+                        <form action="{% url nameUrlPattern %}" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="save" value="{{article.title}}">
                             <button id="save-{{article.title}}" type="submit" class="btn btn-success rounded-circle mx-2 featureArticle"><i class="fas fa-save fa-lg"></i></button>
@@ -99,7 +99,8 @@
             </div>
             <div class="card-footer text-muted">
                 {% if article.publishedAt %}
-                    {{article.publishedAt|date_format}}
+                    {# article.publishedAt|date_format #} -->
+                    {{article.publishedAt}}
                 {% endif %}
                 
                 {% if article.author %}

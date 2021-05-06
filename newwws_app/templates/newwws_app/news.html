@@ -5,13 +5,12 @@
 {% load static %}
 
 
-
 <!-- Masthead-->
 <header class="masthead" style="padding:10%">
     <div class="container mt-5">
-        <div class="masthead-subheading">Your daily newwws !</div>
+        <div class="masthead-subheading">Every newwws !</div>
         {% if messages %}
-        <div class="d-flex flex-column justify-content-center align-items-center">
+        <div class="alert-message-app d-flex flex-column justify-content-center align-items-center">
             {% for message in messages %}
             <div class="alert alert-{{ message.tags }} my-4 text-center" role="alert" style="width:600px">
                 {{message}}
@@ -25,8 +24,8 @@
 <!-- Page content-->
 <div class="container">
     <div class="row">
-        
-        {% include 'newwws_app/layouts/feed_articles.html' with nameUrlpattern='newwws_app:news' %}
+
+        {% include 'newwws_app/layouts/feed_articles.html' with nameUrlPattern='newwws_app:news' %}
 
         <!-- Side widgets-->
         <div class="col-md-4">
@@ -37,27 +36,74 @@
                     <h5 class="card-header">Search</h5>
                     <div class="card-body">
                         <div class="input-group">
-                            <input id="querySearch" name="search" class="form-control" type="text" placeholder="Key word..." value="{{value_input}}" />
+                            <input id="querySearch" name="search" class="form-control" type="text" placeholder="Key word..." minlength="1" pattern="[0-9a-zA-Z]{0-1000}" aria-describedby="queryHelpInline" value="{{value_input}}" required/>
                         </div>
+                        <small id="queryHelpInline" class="text-muted">
+                            <i class="fas fa-info-circle"></i> Must have 1 character.
+                        </small>
                     </div>
                 </div>
-                <!-- Categories widget-->
+                <!-- SortBy widget-->
                 <div class="card my-4">
-                    <h5 class="card-header">Categories</h5>
+                    <h5 class="card-header">Sort by</h5>
                     <div class="card-body">
                         <div class="row d-flex flex-column justify-content-around align-items-start ml-2">
-                            {% for category in CATEGORIES %}
+                            {% for preference in SORTBY %}
                                 <div class="form-check">
-                                    <input id="queryCategory" class="form-check-input" type="radio" name="category" id="{{category}}" value="{{category}}">
-                                    <label class="form-check-label" for="{{category}}">
-                                        {% if category == "generalhealth" %}
-                                            General health
-                                        {% else %}
-                                            {{ category|title}}
-                                        {% endif %} 
+                                    <input id="querySortBy" class="form-check-input" type="radio" name="shortBy" id="{{preference}}" value="{{preference}}">
+                                    <label class="form-check-label" for="{{preference}}">
+                                        {{preference|title}}
                                     </label>
                                 </div>
                             {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <!-- date widget-->
+                <div class="card my-4">
+                    <div class="card-header d-flex flex-row justify-content-start align-items-center">
+                        <h5>Date</h5>
+                        <button type="button" class="btn btn-light rounded-circle mb-2 ml-2 featureArticle" data-toggle="modal" data-target="#modal-premium"><i class="fas fa-star text-primary"></i></button>
+                        <!-- Modal save-->
+                        <div class="modal fade" id="modal-premium" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Feature not permitted</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>To use this one, please subscribe to a premium access.</p>
+                                    <p style="color:red"><i class="fas fa-exclamation-circle text-danger"></i> Premium access soon available </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button class="btn btn-primary" href="" disabled>Subscribe</a>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row d-flex flex-column justify-content-around align-items-start ml-2">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="inputFrom">From</label>
+                                    <input type="date" id="inputFrom" name="from_param" class="form-control mx-sm-3 dateWidget" aria-describedby="fromHelpInline" >
+                                    <small id="fromHelpInline" class="text-muted">
+                                        <i class="fas fa-info-circle"></i> Must not be more than three years old.
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputTo">to</label>
+                                    <input type="date" id="inputTo" name="to" class="form-control mx-sm-3 dateWidget" aria-describedby="toHelpInline" >
+                                    <small id="toHelpInline" class="text-muted">
+                                        <i class="fas fa-info-circle"></i> You can't see the future.
+                                    </small>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

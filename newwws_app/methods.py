@@ -60,7 +60,7 @@ class RequestApiEverything():
         self.from_param = from_param
         self.to = to
 
-    def articles(self):
+    def news(self):
         articles = newsapiAccess.get_everything(q=self.q,
                                                 qintitle=self.qintitle,
                                                 sources=self.sources,
@@ -79,7 +79,7 @@ class RequestApiHeadlines():
         self.q = q
         self.language = language
 
-    def news(self):
+    def daily_news(self):
         top_headlines = newsapiAccess.get_top_headlines(q=self.q,
                                                   category=self.category,
                                                   language=self.language,
@@ -88,8 +88,8 @@ class RequestApiHeadlines():
 
         
 # training
-# articles = RequestApiEverything(q="bitcoin")
-# print(articles.articles())
+# articles = RequestApiEverything(qintitle="Eric Dupond-Moretti, la carte anti-RN d'Emmanuel Macron")
+# print(articles.news())
 
-# news = RequestApiHeadlines(language="fr")
-# print(news.news())
+# articles = RequestApiHeadlines(q="Eric Dupond-Moretti, la carte anti-RN d'Emmanuel Macron")
+# print(articles.daily_news())

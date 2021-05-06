@@ -9,6 +9,15 @@
 <!-- Masthead-->
 <header class="masthead" style="padding:5%;">
     <div class="container mt-5">
+        {% if messages %}
+            <div class="alert-message-app d-flex flex-column justify-content-center align-items-center">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} my-4 text-center" role="alert" style="width:600px">
+                    {{message}}
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 </header>
 
@@ -18,39 +27,67 @@
         <!-- Post content-->
         <div class="col-lg-10">
             <!-- Title-->
-            <h1 class="mt-4">TITLE</h1>
+            <h1 class="mt-4">{{article.article.title}}</h1>
             <!-- Author-->
             <p class="lead">
-                by
-                <a href="#!">AUTHOR</a>
+                by {{article.article.author}}
             </p>
             <hr />
             <!-- Date and time-->
-            <p>Posted on PUBLISHED_AT</p>
+            <p>Posted on {{article.article.published_at}}</p>
             <hr />
             <!-- Preview image-->
-            <img class="img-fluid rounded" src="https://via.placeholder.com/900x300" alt="..." />
+            <img class="img-fluid rounded" src="{{article.article.url_to_image}}" alt="..." />
             <hr />
             <!-- Post content-->
-            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
-            <blockquote class="blockquote">
-                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                <footer class="blockquote-footer">
-                    Someone famous in
-                    <cite title="Source Title">Source Title</cite>
-                </footer>
-            </blockquote>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, nostrum, aliquid, animi, ut quas placeat totam sunt tempora commodi nihil ullam alias modi dicta saepe minima ab quo voluptatem obcaecati?</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo, aliquam tenetur ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae? Qui, necessitatibus, est!</p>
-            <hr />
+            <p class="lead">{{article.article.content}}</p>
+            <div class="d-flex flex-row justify-content-center">
+                <button type="button" class="btn btn-light rounded-circle mb-2 ml-2 featureArticle" data-toggle="modal" data-target="#modal-premium"><i class="fas fa-star text-primary"></i></button>
+            </div>
+            <!-- Modal save-->
+            <div class="modal fade" id="modal-premium" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Feature not permitted</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>To use this one, please subscribe to a premium access.</p>
+                        <p style="color:red"><i class="fas fa-exclamation-circle text-danger"></i> Premium access soon available </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" href="" disabled>Subscribe</a>
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-lg-2 my-4">
             <div class="features-article">
-                <a class="my-4" href="#!"><i class="fas fa-save fa-2x"></i></a>
-                <a class="my-4" href="#!"><i class="fas fa-trash-alt fa-2x"></i></a>
-                <a class="my-4" href="#!"><i class="fas fa-bookmark fa-2x"></i></a>
+                <!-- Saved management -->
+                <form action="{% url 'newwws_app:saved' %}" method="POST">
+                {% csrf_token %}
+                    <input type="hidden" name="current_article" value="{{article.article.id}}">
+                    <input type="hidden" name="delete" value="foo">
+                    <button id="delete-{{article.id}}" type="submit" class="btn btn-danger mx-2"><i class="fas fa-trash fa-lg"></i></a>
+                </form>
+
+                <!-- Status read management -->
+                <form action="{% url 'newwws_app:saved' %}" method="POST">
+                {% csrf_token %}
+                    <input type="hidden" name="current_article" value="{{article.article.id}}">
+                    {% if article.read %}
+                        <input type="hidden" name="read" value="False">
+                        <button id="read-{{article.id}}" type="submit" class="btn btn-success mx-2"><i class="fas fa-bookmark fa-lg"></i></a>
+                    {% else %}
+                        <input type="hidden" name="read" value="True">
+                        <button id="read-{{article.id}}" type="submit" class="btn btn-secondary mx-2"><i class="fas fa-bookmark fa-lg"></i></a>
+                    {% endif %}
+                </form>
             </div>
         </div>
     </div>

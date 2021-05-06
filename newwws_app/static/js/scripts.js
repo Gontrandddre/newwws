@@ -71,3 +71,7 @@
 
 })(jQuery);
 
+
+(function ($) {
+//   $(".alert-message-app").hide().fadeIn(500).delay(2000).fadeOut(500); 
+})(jQuery);

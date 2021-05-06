@@ -29,7 +29,14 @@ class Article(models.Model):
     published_at = models.DateTimeField("published at", null=True)
     url = models.URLField("url article", null=True)
     url_to_image = models.URLField("image article", max_length=400, null=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.title
+
+class Saved(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
+    read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "%s saved article %s" % (self.user.username, self.article.id)

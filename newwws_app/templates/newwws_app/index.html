@@ -8,7 +8,7 @@
 <header class="masthead">
     <div class="container">
         <div class="masthead-subheading">Welcome To Newwws !</div>
-        <div class="masthead-heading text-uppercase">The worldwide's first news search application</div>
+        <div class="masthead-heading text-uppercase">The world's leading news search application</div>
         <!-- <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Get started <i class="fas fa-chevron-right fa-lg"></i></a> -->
         <form method="POST" href="{% url 'newwws_app:index' %}">
             {% csrf_token %}
@@ -17,14 +17,13 @@
                 <label class="custom-control-label" for="customSwitches">Only daily news</label>
             </div>
             <div class="row justify-content-center align-items-stretch">
-
                 <input id="querySearch" type="text" class="control-form mr-1" name="query" placeholder="Key word ..." style="border-radius:5px; border-color:white; width:300px">
                 <button id="submitQuery" type="submit" class="btn btn-dark" style="background-color: #E26845; border-color:#E26845"><i class="fas fa-search"></i></button>
             </div>
             
         </form>
         {% if messages %}
-        <div class="d-flex flex-column justify-content-center align-items-center">
+        <div class="alert-message-app d-flex flex-column justify-content-center align-items-center">
             {% for message in messages %}
             <div class="alert alert-{{message.tags}} my-4 text-center" role="alert" style="width:350px">
                 {{message}}
@@ -39,7 +38,7 @@
     <div class="container">
         <div class="text-center">
             <h2 class="section-heading text-uppercase">Services</h2>
-            <h3 class="section-subheading text-muted">Search, archive, news ...</h3>
+            <h3 class="section-subheading text-muted">Search, Archive, View ... News</h3>
         </div>
         <div class="row text-center">
             <div class="col-md-4">
@@ -48,7 +47,7 @@
                     <i class="fas fa-search fa-stack-1x fa-inverse"></i>
                 </span>
                 <h4 class="my-3">Search</h4>
-                <p class="text-muted">Search any articles with your filters as country, language or content... There is not limit to your request.</p>
+                <p class="text-muted">An optimal search interface to find your articles. This search can be done up to 3 years before the date of the article's publication. There is not limit to your request.</p>
             </div>
             <div class="col-md-4">
                 <span class="fa-stack fa-4x">
@@ -56,7 +55,7 @@
                     <i class="fas fa-archive fa-stack-1x fa-inverse"></i>
                 </span>
                 <h4 class="my-3">Archive</h4>
-                <p class="text-muted">Archive any article found. Eache article can receive a status of reading and add more details about them.</p>
+                <p class="text-muted">Archive your favourite articles to find them later and read them. Small features will allow you to manage your saved articles.</p>
             </div>
             <div class="col-md-4">
                 <span class="fa-stack fa-4x">
@@ -64,7 +63,7 @@
                     <i class="fas fa-clock fa-stack-1x fa-inverse"></i>
                 </span>
                 <h4 class="my-3">Last News</h4>
-                <p class="text-muted">Find the last news around the world. You will find all articles wich pubhished recentrly. You can as all articles, save them.</p>
+                <p class="text-muted">Find the latest news from around the world. A multitude of filters will allow you to make an optimal search.</p>
             </div>
         </div>
     </div>
@@ -75,37 +74,37 @@
     <div class="container">
         <div class="text-center">
             <h2 class="section-heading text-uppercase">About NEWWWS</h2>
-            <h3 class="section-subheading text-muted">Une idée originale, des utilisateurs convaincus.</h3>
+            <h3 class="section-subheading text-muted">An original idea, convinced users.</h3>
         </div>
         <ul class="timeline">
             <li>
                 <div class="timeline-image"><img class="rounded-circle img-fluid" src="{% static 'img/about/1.jpg' %}" alt="..." /></div>
                 <div class="timeline-panel">
                     <div class="timeline-heading">
-                        <h4>2009-2011</h4>
+                        <h4>2019-2020</h4>
                         <h4 class="subheading">First step: Idea</h4>
                     </div>
-                    <div class="timeline-body"><p class="text-muted">I receive more details from industry journllism from a friend who work on it. After many discussions, he said to me than they have no too perfcetionaly to research news around the world.</p></div>
+                    <div class="timeline-body"><p class="text-muted">After much feedback about the archaic methods of searching for news in editorial departments, we had the idea of creating an application that would simplify this search through a web tool. We came up with the idea of creating an application to simplify this search through a web interface.</p></div>
                 </div>
             </li>
             <li class="timeline-inverted">
                 <div class="timeline-image"><img class="rounded-circle img-fluid" src="{% static 'img/about/2.jpg' %}" alt="..." /></div>
                 <div class="timeline-panel">
                     <div class="timeline-heading">
-                        <h4>March 2011</h4>
+                        <h4>2021</h4>
                         <h4 class="subheading">New tool is Born</h4>
                     </div>
-                    <div class="timeline-body"><p class="text-muted">After 2 years, Newwws is up ! This solution want to revolution the research of content news around the world. </p></div>
+                    <div class="timeline-body"><p class="text-muted">It is after more than a year of reflection and work that our NEWWWS solution was born. This solution will revolutionise the search for news wherever it comes from. NEWWWS will be accessible everywhere to everyone. </p></div>
                 </div>
             </li>
             <li>
                 <div class="timeline-image"><img class="rounded-circle img-fluid" src="{% static 'img/about/3.jpg' %}" alt="..." /></div>
                 <div class="timeline-panel">
                     <div class="timeline-heading">
-                        <h4>December 2015</h4>
-                        <h4 class="subheading">Transition to Full Service</h4>
+                        <h4>2021-2022</h4>
+                        <h4 class="subheading">Next step</h4>
                     </div>
-                    <div class="timeline-body"><p class="text-muted">As all projects, there are many features to implement to have the bast tool ever. We are in nice way. We will add a feature to analyse data about news arround the worlds.</p></div>
+                    <div class="timeline-body"><p class="text-muted">The next step? Making international news data intelligible and visible. This data analysis will allow us to visualise general news trends and improve our solution with new features.</p></div>
                 </div>
             </li>
             <li class="timeline-inverted">
@@ -141,12 +140,12 @@
                 <div class="team-member">
                     <img class="mx-auto rounded-circle" src="{% static 'img/team/2.jpg' %}" alt="picture robert" />
                     <h4>Robert Dupont</h4>
-                    <p class="text-muted">Lead Journalism</p>
+                    <p class="text-muted">Lead Journalist</p>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-8 mx-auto text-center"><p class="large text-muted">Our conviction is to create the fistr tool to research news around the world.</p></div>
+            <div class="col-lg-8 mx-auto text-center"><p class="large text-muted">Our conviction is to create the fistr tool to research news around the world. It is time to give everyone the ability to access news around the world. </p></div>
         </div>
     </div>
 </section>
