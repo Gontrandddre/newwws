@@ -14,22 +14,22 @@
             {% csrf_token %}
             <div class="d-flex flex-row justify-content-center align-items-center">
                 <label class="mx-2 text-left" for="querySearch" style="width:60px">Search</label>
-                <input id="querySearch" type="text" class="form-control mx-sm-3 ml-auto" name="query" placeholder="Key word ..." style="width:200px">
+                <input id="querySearch" type="text" class="form-control mx-sm-3 ml-auto" name="search" placeholder="Key word ..." style="width:200px">
             </div>
             <span class="d-none d-lg-flex" style="font-size:60px;">&#47;</span>
             <div>
                 <div class="d-flex flex-row justify-content-center align-items-center my-1">
-                    <label class="mx-2 text-left" for="inputFrom" style="width:60px">From</label>
-                    <input type="date" id="inputFrom_saved" name="from_param" class="form-control mx-sm-3 ml-auto" style="width:200px" >
+                    <label class="mx-2 text-left" for="inputFromSaved" style="width:60px">From</label>
+                    <input type="date" id="inputFromSaved" name="from" class="form-control mx-sm-3 ml-auto" style="width:200px">
                 </div>
                 <div class="d-flex flex-row justify-content-center align-items-center my-1">
-                    <label class="mx-2 text-left" for="inputFrom" style="width:60px">To</label>
-                    <input type="date" id="inputTo_saved" name="to" class="form-control mx-sm-3 ml-auto" style="width:200px">
+                    <label class="mx-2 text-left" for="inputToSaved" style="width:60px">To</label>
+                    <input type="date" id="inputToSaved" name="to" class="form-control mx-sm-3 ml-auto" style="width:200px">
                 </div>
             </div>
             <span class="d-none d-lg-flex" style="font-size:60px;">&#47;</span>
             <div class="custom-control custom-switch d-flex flex-row justify-content-center align-items-center my-2">
-                <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                <input type="checkbox" class="custom-control-input" id="customSwitch1" name="readParam" value="True">
                 <label class="custom-control-label" for="customSwitch1">Only articles read</label>
             </div>
             <button id="submitQuery" type="submit" class="btn btn-dark align-self-center" style="background-color: #E26845; border-color:#E26845; width:50px"><i class="fas fa-search"></i></button>
@@ -60,8 +60,8 @@
                         <p style="margin-bottom:15%">{{article.article.description}}</p>
                     </div>
                     <hr>
-                    <p class="card-text text-left">{{article.article.published_at}}</p>
-                    <p class="card-text text-left">by {{article.article.author}}</p>
+                    <p class="card-text text-left text-muted">{{article.article.published_at}}</p>
+                    <p class="card-text text-left text-muted">by {{article.article.author}}</p>
                     <div style="margin-bottom: 0px">
                         <div class=" d-flex flex-row justify-content-around align-items-center">
                             <!-- View management -->
@@ -98,28 +98,30 @@
         </div>
         {% endfor %}
     </div>
-    <div class="d-flex flex-row justify-content-around align-items-center" style="margin:5%">
-    {% if articles.has_previous %}
-        <a class="btn btn-primary" href="?page={{articles.previous_page_number}}"><i class="fas fa-arrow-circle-left"></i></a>
-    {% else %}
-        <button class="btn btn-secondary" href="" disabled><i class="fas fa-arrow-circle-left"></i></button>
-    {% endif %}
-    <div>
-    {% for item in list_pages %}
-        {% if item == current_page %}
-            <a class="mx-2 text-secondary" href="?page={{item}}">{{item}}</a>
-        {% elif not current_page and item == 1 %}
-            <a class="mx-2 text-secondary" href="?page={{item}}">{{item}}</a>
+    {% if list_pages %}
+        <div class="d-flex flex-row justify-content-around align-items-center" style="margin:5%">
+        {% if articles.has_previous %}
+            <a class="btn btn-primary" href="?page={{articles.previous_page_number}}"><i class="fas fa-arrow-circle-left"></i></a>
         {% else %}
-            <a class="mx-2" href="?page={{item}}">{{item}}</a>
+            <button class="btn btn-secondary" href="" disabled><i class="fas fa-arrow-circle-left"></i></button>
         {% endif %}
-    {% endfor %}
-    </div> 
-    {% if articles.has_next %}
-        <a class="btn btn-primary" href="?page={{articles.next_page_number}}"><i class="fas fa-arrow-circle-right"></i></a>
-    {% else %}
-        <button class="btn btn-secondary" href="" disabled><i class="fas fa-arrow-circle-right"></i></button>
-    {% endif %}    
+        <div>
+        {% for item in list_pages %}
+            {% if item == current_page %}
+                <a class="mx-2 text-secondary" href="?page={{item}}">{{item}}</a>
+            {% elif not current_page and item == 1 %}
+                <a class="mx-2 text-secondary" href="?page={{item}}">{{item}}</a>
+            {% else %}
+                <a class="mx-2" href="?page={{item}}">{{item}}</a>
+            {% endif %}
+        {% endfor %}
+        </div> 
+        {% if articles.has_next %}
+            <a class="btn btn-primary" href="?page={{articles.next_page_number}}"><i class="fas fa-arrow-circle-right"></i></a>
+        {% else %}
+            <button class="btn btn-secondary" href="" disabled><i class="fas fa-arrow-circle-right"></i></button>
+        {% endif %}
+    {% endif %}   
     </div>   
 </div>
 

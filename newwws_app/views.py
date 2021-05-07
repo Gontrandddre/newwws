@@ -3,11 +3,13 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Q
 
 from .forms import CustomUserCreationForm, AuthenticationFormApp
 from .models import CustomUser, Article, Saved
 from .methods import ParseMode, RequestApiHeadlines, RequestApiEverything
 from .constantes import CATEGORIES, LANGUAGES, SORTBY
+
 
 from datetime import datetime
 
@@ -256,6 +258,7 @@ def saved(request):
     
     data = Saved.objects.filter(user=request.user.id)
     current_user = get_object_or_404(CustomUser, pk=request.user.id)
+    messageFromRequest = False
 
     if request.method == 'POST':
 
@@ -283,22 +286,34 @@ def saved(request):
 
             messages.success(request, "Article deleted.")
 
-        # elif request.POST.get('search') or \
-        #      request.POST.get('form_param') or \
-        #      request.POST.get('to') or \
-        #      request.POST.get('read_param') or \
+        elif request.POST.get('search') \
+            or request.POST.get('from') \
+            or request.POST.get('to') \
+            or request.POST.get('readParam'):
 
-        #     data = data.filter(
-        #                 tilte__contains=request.POST.get('search'),
-        #                 publiashedAt__time__range=(
-        #                     datetime.time(request.POST.get('form_param'),
-        #                     datetime.time(request.POST.get('to'))
-        #                 ),
-        #                 read=request.POST.get('read_param')
-        #             )
+            print(request.POST.get('readParam'))
+
+            if request.POST.get('search'):
+                data = data.filter(Q(article__title__icontains=request.POST.get('search')) | Q(article__description__icontains=request.POST.get('search')) | Q(article__content__icontains=request.POST.get('search')))
+            if request.POST.get('from'): 
+                data = data.filter(Q(article__published_at__gte=request.POST.get('from')))
+            if request.POST.get('to'):
+                data = data.filter(Q(article__published_at__lte=request.POST.get('to')))
+            if request.POST.get('readParam'):              
+                data = data.filter(Q(read=request.POST.get('readParam')))
+            
+            if data.count() == 0:
+                messageFromRequest = True
+                messages.warning(request, "There are no articles matching your search.")
+                list_pages = None
+                page = None
     
+    if data.count() == 0 & messageFromRequest == True:
+        messages.warning(request, "No article saved.")
+
     if data.count() == 0:
-        messages.warning(request, "Not article saved.")
+        list_pages = None
+        page = None
     
     else:
         paginator = Paginator(data, 8)
