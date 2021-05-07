@@ -52,7 +52,11 @@
                                 <div class="form-check">
                                     <input id="querySortBy" class="form-check-input" type="radio" name="shortBy" id="{{preference}}" value="{{preference}}">
                                     <label class="form-check-label" for="{{preference}}">
-                                        {{preference|title}}
+                                        {% if preference == 'publishedAt' %}
+                                            Date
+                                        {% else %}
+                                            {{preference|title}}
+                                        {% endif %}
                                     </label>
                                 </div>
                             {% endfor %}
