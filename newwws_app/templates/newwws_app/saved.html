@@ -19,20 +19,20 @@
             <span class="d-none d-lg-flex" style="font-size:60px;">&#47;</span>
             <div>
                 <div class="d-flex flex-row justify-content-center align-items-center my-1">
-                    <label class="mx-2 text-left" for="inputFromSaved" style="width:60px">From</label>
-                    <input type="date" id="inputFromSaved" name="from" class="form-control mx-sm-3 ml-auto" style="width:200px">
+                    <label class="mx-2 text-left" for="queryFrom" style="width:60px">From</label>
+                    <input id="queryFrom" type="date" name="from" class="form-control mx-sm-3 ml-auto" style="width:200px">
                 </div>
                 <div class="d-flex flex-row justify-content-center align-items-center my-1">
-                    <label class="mx-2 text-left" for="inputToSaved" style="width:60px">To</label>
-                    <input type="date" id="inputToSaved" name="to" class="form-control mx-sm-3 ml-auto" style="width:200px">
+                    <label class="mx-2 text-left" for="queryTo" style="width:60px">To</label>
+                    <input id="queryTo" type="date" name="to" class="form-control mx-sm-3 ml-auto" style="width:200px">
                 </div>
             </div>
             <span class="d-none d-lg-flex" style="font-size:60px;">&#47;</span>
             <div class="custom-control custom-switch d-flex flex-row justify-content-center align-items-center my-2">
-                <input type="checkbox" class="custom-control-input" id="customSwitch1" name="readParam" value="True">
-                <label class="custom-control-label" for="customSwitch1">Only articles read</label>
+                <input id="queryRead" type="checkbox" class="custom-control-input" name="readParam" value="True">
+                <label class="custom-control-label" for="queryRead">Only articles read</label>
             </div>
-            <button id="submitQuery" type="submit" class="btn btn-dark align-self-center" style="background-color: #E26845; border-color:#E26845; width:50px"><i class="fas fa-search"></i></button>
+            <button id="querySubmit" type="submit" class="btn btn-dark align-self-center" style="background-color: #E26845; border-color:#E26845; width:50px"><i class="fas fa-search"></i></button>
         </form>
         {% if messages %}
             <div class="alert-message-app d-flex flex-column justify-content-center align-items-center">
