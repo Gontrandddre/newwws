@@ -15,7 +15,7 @@ urlpatterns = [
     path("my-news", views.saved, name="saved"),
     path("news", views.news, name="news"),
     path("account", views.account, name="account"),
-    path("legal-notice", TemplateView.as_view(template_name="newwws_app/legal_notices.html"), name="legal-notice"),
+    path("legal-notice", TemplateView.as_view(template_name="newwws_app/legal_notice.html"), name="legal-notice"),
 ]
 
 urlpatterns += [
