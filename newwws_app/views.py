@@ -355,7 +355,3 @@ def article(request, id_article):
     return render(request, 'newwws_app/article.html', {
         "article": data,
     })
-
-@login_required(login_url="login")
-def account(request):
-    return render(request, 'newwws_app/account.html', {})
