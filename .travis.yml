@@ -2,9 +2,6 @@ language: python
 python:
   - "3.8"
 
-addons:
-  chrome: stable
-
 install:
   - pip3 install pipenv
   - pipenv install
@@ -21,4 +18,4 @@ services:
   - postgresql
 
 script:
-  - python3 manage.py test off.test.main_test
+  - python3 manage.py test newwws_app.test.main_test
