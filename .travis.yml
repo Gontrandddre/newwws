@@ -9,9 +9,6 @@ install:
   - pip3 install pipenv
   - pipenv install
 
-before_script:
-  - install-webdrivers --path webdrivers
-
 branches:
   only:
     - dev
