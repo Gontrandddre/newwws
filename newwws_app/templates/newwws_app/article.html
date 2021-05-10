@@ -28,10 +28,12 @@
         <div class="col-lg-10">
             <!-- Title-->
             <h1 class="mt-4">{{article.article.title}}</h1>
+            {% if article.article.author %}
             <!-- Author-->
             <p class="lead">
                 by {{article.article.author}}
             </p>
+            {% endif %}
             <hr />
             <!-- Date and time-->
             <p>Posted on {{article.article.published_at}}</p>
