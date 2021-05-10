@@ -13,7 +13,7 @@
         {% if messages %}
         <div class="alert-message-app d-flex flex-column justify-content-center align-items-center">
             {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} my-4 text-center" role="alert" style="width:600px">
+            <div class="alert alert-{{ message.tags }} my-4 text-center alert-saved-daily-news" role="alert" style="width:600px">
                 {{message}}
             </div>
             {% endfor %}

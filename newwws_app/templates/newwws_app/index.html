@@ -13,8 +13,8 @@
         <form method="POST" href="{% url 'newwws_app:index' %}">
             {% csrf_token %}
             <div class="custom-control custom-switch my-4">
-                <input type="checkbox" class="custom-control-input" id="customSwitches" name="mode">
-                <label class="custom-control-label" for="customSwitches">Only daily news</label>
+                <input id="queryDailyNews" type="checkbox" class="custom-control-input" name="mode">
+                <label class="custom-control-label" for="queryDailyNews">Only daily news</label>
             </div>
             <div class="row justify-content-center align-items-stretch">
                 <input id="querySearch" type="text" class="control-form mr-1" name="query" placeholder="Key word ..." style="border-radius:5px; border-color:white; width:300px">

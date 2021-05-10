@@ -19,7 +19,7 @@
                 {% endif %}
                 <div class="d-flex flex-row justify-content-end align-items-center">
                     {% if article.content %}
-                        <button class="btn btn-primary rounded-circle mx-2 featureArticle" data-toggle="modal" data-target="#modal-article-content-{{forloop.counter}}"><i class="fas fa-eye fa-lg"></i></button>
+                        <button class="btn btn-primary rounded-circle mx-2 featureArticle btn-read-article-{{forloop.counter}}" data-toggle="modal" data-target="#modal-article-content-{{forloop.counter}}"><i class="fas fa-eye fa-lg"></i></button>
                         <!-- Modal content -->
                         <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal-article-content-{{forloop.counter}}" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
@@ -65,12 +65,12 @@
                             </div>
                         </div>
                     {% endif %}
-                    <a class="btn btn-info rounded-circle mx-2 featureArticle" href="{{article.url}}" target="_blank"><i class="fas fa-mouse-pointer fa-lg"></i></a>
+                    <a class="btn btn-info rounded-circle mx-2 featureArticle urlArticle" href="{{article.url}}" target="_blank"><i class="fas fa-mouse-pointer fa-lg"></i></a>
                     {% if user.is_authenticated %}
                         <form action="{% url nameUrlPattern %}" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="save" value="{{article.title}}">
-                            <button id="save-{{article.title}}" type="submit" class="btn btn-success rounded-circle mx-2 featureArticle"><i class="fas fa-save fa-lg"></i></button>
+                            <button id="save-{{article.title}}" type="submit" class="btn btn-success rounded-circle mx-2 featureArticle btn-save-article-{{forloop.counter}}"><i class="fas fa-save fa-lg"></i></button>
                         </form>
                     {% else %}
                         <button type="button" class="btn btn-light rounded-circle mx-2 featureArticle" data-toggle="modal" data-target="#modal-article-save-{{forloop.counter}}"><i class="fas fa-save fa-lg"></i></button>

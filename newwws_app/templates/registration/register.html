@@ -32,7 +32,7 @@
                         {% if form.errors %}
                             {% for field, errors in form.errors.items %}
                             {% for error in errors %}
-                            <div class="alert alert-warning">{{error}}</div>
+                            <div id="alertErrorRegistration" class="alert alert-warning">{{error}}</div>
                             {% endfor %}
                             {% endfor %}
                         {% endif %}
@@ -41,21 +41,21 @@
                         <form method="post" action="{% url 'newwws_app:register' %}">
                         {% csrf_token %}
                             <div class="form-label-group">
-                            <input type="email" id="id_email" name="email" class="form-control" placeholder="Email address" required autofocus>
-                            <label for="id_email">Email address</label>
+                            <input id="emailRegistration" type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
+                            <label for="emailRegistration">Email address</label>
                             </div>
 
                             <div class="form-label-group">
-                            <input type="password" id="id_password1" name="password1" class="form-control" placeholder="Password" required>
-                            <label for="id_password1">Password</label>
+                            <input id="passwordRegistration" type="password" name="password1" class="form-control" placeholder="Password" required>
+                            <label for="passwordRegistration">Password</label>
                             </div>
 
                             <div class="form-label-group">
-                            <input type="password" id="id_password2" name="password2" class="form-control" placeholder="Password confirmation" required>
-                            <label for="id_password2">Password confirmation</label>
+                            <input id="passwordConfirmationRegistration" type="password" name="password2" class="form-control" placeholder="Password confirmation" required>
+                            <label for="passwordConfirmationRegistration">Password confirmation</label>
                             </div>
 
-                            <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
+                            <button id="submitRegistration" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
                         </form>
                         </div>
                     </div>

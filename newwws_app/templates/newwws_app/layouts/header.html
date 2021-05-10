@@ -13,16 +13,15 @@
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'newwws_app:daily_news' %}">Daily.News</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'newwws_app:news' %}">News</a></li>
                 {% if user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'newwws_app:saved' %}">My.News</a></li>
+                <li class="nav-item"><a id="myNewsHeader" class="nav-link js-scroll-trigger" href="{% url 'newwws_app:saved' %}">My.News</a></li>
                 <li class="nav-item">
                     <div class="dropdown show">
-                        <a class="nav-link js-scroll-trigger" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a id="accountHeader" class="nav-link js-scroll-trigger" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Account
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
-                            <a class="dropdown-item" href="{% url 'newwws_app:account' %}">Details</a>
+                            <a id="logoutHeader" class="dropdown-item" href="{% url 'logout' %}">Log out</a>
                         </div>
                     </div>
                 </li>

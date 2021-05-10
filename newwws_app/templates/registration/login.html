@@ -33,29 +33,29 @@
                             {% if next %}
                                 {% if not user.is_authenticated %}
                                 <div class="alert-message-app d-flex flex-row justify-content-center align-items-center my-4">
-                                    <div id="alert_login" class="alert alert-warning">Connect to your account or Create one to see more.</div>
+                                    <div id="alertAccessNotPermitted" class="alert alert-warning">Connect to your account or Create one to see more.</div>
                                 </div>
                                 {% endif %}
                             {% endif %}
                             {% if form.errors %}
                                 <div class="d-flex flex-row justify-content-center align-items-center my-4">
-                                    <div class="alert alert-warning">Your email or password is incorrect. Please try again.</div>
+                                    <div id="alertErrorLogin" class="alert alert-warning">Your email or password is incorrect. Please try again.</div>
                                 </div>
                             {% endif %}
                         <h3 class="login-heading mb-4">Welcome back !</h3>
                         <form method="post" action="{% url 'login' %}">
                         {% csrf_token %}
                             <div class="form-label-group">
-                            <input type="text" id="id_email" name="username" class="form-control" placeholder="Username" required autofocus>
+                            <input type="text" id="emailLogin" name="username" class="form-control" placeholder="Username" required autofocus>
                             <label for="id_email">Email address</label>
                             </div>
 
                             <div class="form-label-group">
-                            <input type="password" id="id_password" name="password" class="form-control" placeholder="Password" required>
+                            <input type="password" id="passwordLogin" name="password" class="form-control" placeholder="Password" required>
                             <label for="id_password">Password</label>
                             </div>
 
-                            <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="login">Sign in</button>
+                            <button id="submitLogin" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="login">Sign in</button>
                             <div class="d-flex flex-row justify-content-center align-items-center my-4">
                                 <a class="" href="{% url 'newwws_app:register' %}" >Create an account.</a>
                             </div>
