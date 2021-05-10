@@ -41,10 +41,12 @@
                                                     {% endif %}
                                                 </div>
                                                 
+                                                {% if article.author %}
                                                 <!-- Author-->
                                                 <p class="lead">
                                                     by {{article.author}}
                                                 </p>
+                                                {% endif %}
                                                 <hr />
                                                 <!-- Date and time-->
                                                 <p>Posted on {{article.publishedAt}}</p>

@@ -61,7 +61,9 @@
                     </div>
                     <hr>
                     <p class="card-text text-left text-muted">{{article.article.published_at}}</p>
+                    {% if article.article.author %}
                     <p class="card-text text-left text-muted">by {{article.article.author}}</p>
+                    {% endif %}
                     <div style="margin-bottom: 0px">
                         <div class=" d-flex flex-row justify-content-around align-items-center">
                             <!-- View management -->
