@@ -29,10 +29,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'xg$ac0yg53))@e2gdt%rz=g*5*rtais#*lkuj
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get("ENV") == "PRODUCTION":
     DEBUG = False
-    ALLOWED_HOSTS = ["newwws.herokuapp.com"]
+    ALLOWED_HOSTS = ["newwws-web.herokuapp.com"]
 else:
     DEBUG = True
-    ALLOWED_HOSTS = ['newwws-web.herokuapp.com']
+    ALLOWED_HOSTS = []
 
 
 # Application definition
