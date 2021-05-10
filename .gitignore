@@ -4,6 +4,6 @@
 .env
 
 # settings production
-/off_project/settings/production.py
-/off_project/settings.py
+/newwws_project/settings/production.py
+/newwws_project/settings.py
 /static/*
