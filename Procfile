@@ -1,1 +1,1 @@
-web: gunicorn off_project.wsgi
+web: gunicorn newwws_project.wsgi

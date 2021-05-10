@@ -32,7 +32,7 @@ if os.environ.get("ENV") == "PRODUCTION":
     ALLOWED_HOSTS = ["newwws.herokuapp.com"]
 else:
     DEBUG = True
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = ['newwws-web.herokuapp.com']
 
 
 # Application definition
@@ -144,6 +144,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = PurePath(BASE_DIR, "staticfiles")
 
 if os.environ.get("ENV") == "PRODUCTION":
     STATIC_ROOT = PurePath(BASE_DIR, "staticfiles")
