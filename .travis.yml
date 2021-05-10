@@ -1,0 +1,21 @@
+language: python
+python:
+  - "3.8"
+
+install:
+  - pip3 install pipenv
+  - pipenv install
+
+branches:
+  only:
+    - dev
+
+env:
+  global:
+    - DJANGO_SETTINGS_MODULE="newwws_project.settings.travis"
+
+services:
+  - postgresql
+
+script:
+  - python3 manage.py test newwws_app.test.main_test

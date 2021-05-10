@@ -24,15 +24,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'xg$ac0yg53))@e2gdt%rz=g*5*rtais#*lkujbx90+yta$5t$r')
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY', 'xg$ac0yg53))@e2gdt%rz=g*5*rtais#*lkujbx90+yta$5t$r'
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get("ENV") == "PRODUCTION":
     DEBUG = False
-    ALLOWED_HOSTS = ["newwws.herokuapp.com"]
+    ALLOWED_HOSTS = ["newwws-web.herokuapp.com"]
 else:
     DEBUG = True
-    ALLOWED_HOSTS = ['newwws-web.herokuapp.com']
+    ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -144,8 +146,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
-STATIC_ROOT = PurePath(BASE_DIR, "staticfiles")
 
 if os.environ.get("ENV") == "PRODUCTION":
     STATIC_ROOT = PurePath(BASE_DIR, "staticfiles")
