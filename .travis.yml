@@ -1,0 +1,27 @@
+language: python
+python:
+  - "3.8"
+
+addons:
+  chrome: stable
+
+install:
+  - pip3 install pipenv
+  - pipenv install
+
+before_script:
+  - install-webdrivers --path webdrivers
+
+branches:
+  only:
+    - dev
+
+env:
+  global:
+    - DJANGO_SETTINGS_MODULE="newwws_project.settings.travis"
+
+services:
+  - postgresql
+
+script:
+  - python3 manage.py test off.test.main_test
