@@ -308,7 +308,7 @@ def saved(request):
                 list_pages = None
                 page = None
     
-    if data.count() == 0 & messageFromRequest == True:
+    if data.count() == 0 & messageFromRequest == False:
         messages.warning(request, "No article saved.")
 
     if data.count() == 0:
