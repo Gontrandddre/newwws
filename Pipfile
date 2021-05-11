@@ -18,6 +18,7 @@ django-extensions = "*"
 selenium = "*"
 webdriver-manager = "*"
 python-dotenv = "*"
+tchappui-webdrivers = "*"
 
 [dev-packages]
 
