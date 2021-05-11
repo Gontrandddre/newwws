@@ -292,10 +292,10 @@ class MyNewsPathSelenium(StaticLiveServerTestCase):
             email="testSelenium5@test.test", password="testPasswordSelenium5"
         )
         
-        Article.objects.create(id=1, title="Article test 1", description="test1", published_at="2021-04-03T18:35:56Z")
-        Article.objects.create(id=2, title="Article test 2", description="test2", published_at="2021-04-04T18:35:56Z")
-        Article.objects.create(id=3, title="Article test 3", description="test3", published_at="2021-04-05T18:35:56Z")
-        Article.objects.create(id=4, title="Article test 4", description="test4", published_at="2021-04-06T18:35:56Z")
+        Article.objects.create(id=1, title="Article test 1", description="test1", published_at="2021-04-03T17:51:00Z")
+        Article.objects.create(id=2, title="Article test 2", description="test2", published_at="2021-04-04T18:35:00Z")
+        Article.objects.create(id=3, title="Article test 3", description="test3", published_at="2021-04-05T18:35:00Z")
+        Article.objects.create(id=4, title="Article test 4", description="test4", published_at="2021-04-06T18:35:00Z")
 
         Saved.objects.create(article_id=Article.objects.get(pk=1).id, user_id=user.id, read=False)
         Saved.objects.create(article_id=Article.objects.get(pk=2).id, user_id=user.id, read=False)
