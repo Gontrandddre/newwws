@@ -5,9 +5,8 @@ from django.utils.translation import gettext as _
 from django.utils.translation import ugettext_lazy as _
 from .managers import CustomUserManager
 
-
-
 # Create your models here.
+
 
 class CustomUser(AbstractUser):
     username = None
@@ -21,6 +20,7 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
 
+
 class Article(models.Model):
     title = models.CharField("title", max_length=300, null=True)
     description = models.CharField("description", max_length=800, null=True)
@@ -32,6 +32,7 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class Saved(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)

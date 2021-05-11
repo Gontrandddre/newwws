@@ -2,13 +2,19 @@ language: python
 python:
   - "3.8"
 
-install:
-  - pip3 install pipenv
-  - pipenv install
+addons:
+  chrome: stable
 
 branches:
   only:
     - dev
+
+install:
+  - pip3 install pipenv
+  - pipenv install
+
+before_script:
+  - install-webdrivers --path webdrivers
 
 env:
   global:
@@ -18,4 +24,4 @@ services:
   - postgresql
 
 script:
-  - python3 manage.py test newwws_app.test.main_test
+  - python3 manage.py test newwws_app.test.selenium_test

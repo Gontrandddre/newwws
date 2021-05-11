@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
 from django.urls import reverse
-from ..models import Article, CustomUser, Saved
+from ..models import CustomUser
 from ..methods import ParseMode, RequestApiEverything, RequestApiHeadlines
 
 
@@ -85,7 +85,7 @@ class StaticPageTest(TestCase):
             "Welcome To Newwws !",
             response.content.decode("utf8")
         )
-    
+
     def test_logout_page(self):
         response = self.client.get(reverse("logout"))
         self.assertEqual(response.status_code, 200)
@@ -95,11 +95,9 @@ class StaticPageTest(TestCase):
             "See you !",
             response.content.decode("utf8")
         )
-    
+
     def test_daily_news_page(self):
         response = self.client.get(reverse("newwws_app:daily_news"))
-        self.client.session['query'] = 'politic'
-        self.client.session.save()
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "newwws_app/daily_news.html")
         self.assertEqual(response.resolver_match.func.__name__, "daily_news")
@@ -110,8 +108,6 @@ class StaticPageTest(TestCase):
 
     def test_news_page(self):
         response = self.client.get(reverse("newwws_app:news"))
-        self.client.session['query'] = 'politic'
-        self.client.session.save()
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "newwws_app/news.html")
         self.assertEqual(response.resolver_match.func.__name__, "news")
@@ -119,7 +115,7 @@ class StaticPageTest(TestCase):
             "Every newwws !",
             response.content.decode("utf8")
         )
-    
+
     def test_my_news_page(self):
         response = self.client.get(reverse("newwws_app:saved"))
         self.assertEqual(response.status_code, 200)
@@ -139,6 +135,7 @@ class StaticPageTest(TestCase):
             "Technologies",
             response.content.decode("utf8")
         )
+
 
 class LogInPageTestCase(TestCase):
     def test_logIn_page(self):
