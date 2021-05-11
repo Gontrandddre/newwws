@@ -6,8 +6,13 @@ from unidecode import unidecode
 from newsapi import NewsApiClient
 import requests
 
+from os import environ
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # Init NewsApi
-newsapiAccess = NewsApiClient(api_key='6883ebc956424214a2aa0f47258925f9')
+newsapiAccess = NewsApiClient(api_key=environ.get('NEWS_API_KEY'))
 
 
 class ParseMode():
