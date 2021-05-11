@@ -3,15 +3,16 @@ import datetime
 
 register = Library()
 
+
 @register.filter(expects_localtime=True)
 def date_format(value):
-    
+
     try:
         format = datetime.datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ")
     except ValueError:
-        try: 
+        try:
             format = datetime.datetime.strptime(value, "%Y-%m-%dT%H:%M:%S+00:00")
         except ValueError:
-             format = None
+            format = None
 
     return format

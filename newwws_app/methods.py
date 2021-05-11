@@ -4,8 +4,6 @@
 from .constantes import NO_CHARS_LIST, STOP_WORDS
 from unidecode import unidecode
 from newsapi import NewsApiClient
-import requests
-
 from os import environ
 from dotenv import load_dotenv
 
@@ -27,7 +25,6 @@ class ParseMode():
 
         self.user_input = user_input
         self.user_input_cleaned = None
-
 
     def cleanInput(self):
         """
@@ -62,13 +59,15 @@ class RequestApiEverything():
         self.to = to
 
     def news(self):
-        articles = newsapiAccess.get_everything(q=self.q,
-                                                qintitle=self.qintitle,
-                                                sources=self.sources,
-                                                domains=self.domains,
-                                                language=self.language,
-                                                from_param=self.from_param,
-                                                to=self.to)
+        articles = newsapiAccess.get_everything(
+            q=self.q,
+            qintitle=self.qintitle,
+            sources=self.sources,
+            domains=self.domains,
+            language=self.language,
+            from_param=self.from_param,
+            to=self.to
+        )
         return articles
 
 
@@ -81,10 +80,12 @@ class RequestApiHeadlines():
         self.language = language
 
     def daily_news(self):
-        top_headlines = newsapiAccess.get_top_headlines(q=self.q,
-                                                  category=self.category,
-                                                  language=self.language,
-                                                  country=self.country)
+        top_headlines = newsapiAccess.get_top_headlines(
+            q=self.q,
+            category=self.category,
+            language=self.language,
+            country=self.country
+        )
         return top_headlines
 
 
