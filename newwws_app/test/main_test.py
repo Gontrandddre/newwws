@@ -98,6 +98,8 @@ class StaticPageTest(TestCase):
     
     def test_daily_news_page(self):
         response = self.client.get(reverse("newwws_app:daily_news"))
+        self.client.session['query'] = 'politic'
+        self.client.session.save()
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "newwws_app/daily_news.html")
         self.assertEqual(response.resolver_match.func.__name__, "daily_news")
@@ -108,6 +110,8 @@ class StaticPageTest(TestCase):
 
     def test_news_page(self):
         response = self.client.get(reverse("newwws_app:news"))
+        self.client.session['query'] = 'politic'
+        self.client.session.save()
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "newwws_app/news.html")
         self.assertEqual(response.resolver_match.func.__name__, "news")
