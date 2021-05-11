@@ -108,7 +108,6 @@ def index(request):
 
 
 def daily_news(request):
-
     try:
         data = RequestApiHeadlines(q=request.session['query']).daily_news()
         value_input = request.session['query']
@@ -291,7 +290,7 @@ def saved(request):
             or request.POST.get('to') \
             or request.POST.get('readParam'):
 
-            print(request.POST.get('readParam'))
+            print(request.POST.get('from'))
 
             if request.POST.get('search'):
                 data = data.filter(Q(article__title__icontains=request.POST.get('search')) | Q(article__description__icontains=request.POST.get('search')) | Q(article__content__icontains=request.POST.get('search')))

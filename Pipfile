@@ -17,6 +17,7 @@ whitenoise = "*"
 django-extensions = "*"
 selenium = "*"
 webdriver-manager = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
