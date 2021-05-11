@@ -10,9 +10,7 @@ from .models import CustomUser, Article, Saved
 from .methods import ParseMode, RequestApiHeadlines, RequestApiEverything
 from .constantes import CATEGORIES, LANGUAGES, SORTBY
 
-
 from datetime import datetime
-
 
 # Create your views here.
 
