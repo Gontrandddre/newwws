@@ -23,10 +23,6 @@ class ParseMode():
         self.user_input = user_input
         self.user_input_cleaned = None
 
-    def emptyInput(self):
-        """
-        Allows us to generate warning when input user is empty.
-        """    
 
     def cleanInput(self):
         """
@@ -86,7 +82,7 @@ class RequestApiHeadlines():
                                                   country=self.country)
         return top_headlines
 
-        
+
 # training
 # articles = RequestApiEverything(qintitle="Eric Dupond-Moretti, la carte anti-RN d'Emmanuel Macron")
 # print(articles.news())
