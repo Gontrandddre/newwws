@@ -10,7 +10,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav text-uppercase ml-auto">
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'newwws_app:daily_news' %}">Daily.News</a></li>
+                <li id="dailyNewsHeader" class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'newwws_app:daily_news' %}">Daily.News</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'newwws_app:news' %}">News</a></li>
                 {% if user.is_authenticated %}
                 <li class="nav-item"><a id="myNewsHeader" class="nav-link js-scroll-trigger" href="{% url 'newwws_app:saved' %}">My.News</a></li>
