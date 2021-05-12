@@ -1,9 +1,8 @@
-/staticfiles
+/staticfiles/
 .DS_Store
 /.DS_Store
 .env
 
 # settings production
 /newwws_project/settings/production.py
-/newwws_project/settings.py
 /static/*
