@@ -18,7 +18,7 @@ Cette application permet à tout utilisateur de rechercher de manière optimale 
 
 **SERVEUR**: Heroku
 
-**Adresse**: https://newwws-gda.herokuapp.com/
+**Adresse**: https://newwws-web.herokuapp.com/
 
 **Version:**
 - Version 1: 2021
