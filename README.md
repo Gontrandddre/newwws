@@ -18,7 +18,7 @@ Cette application permet à tout utilisateur de rechercher de manière optimale 
 
 **SERVEUR**: Heroku
 
-**Adresse**: https://newwws-gda.herokuapp.com/
+**Adresse**: https://newwws-web.herokuapp.com/
 
 **Version:**
 - Version 1: 2021
@@ -28,7 +28,7 @@ Cette application permet à tout utilisateur de rechercher de manière optimale 
 
 Pour réaliser cette application, nous nous sommes basés sur les technologies suivantes:
 - Python 3.8 (langage)
-- Django (frameword back-end python)
+- Django (framework back-end python)
 - Bootstrap 4 (framework front-end)
 - HTML5
 - CSS3
