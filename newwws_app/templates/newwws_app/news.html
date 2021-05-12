@@ -29,14 +29,14 @@
 
         <!-- Side widgets-->
         <div class="col-md-4">
-            <form method="POST" href="{% url 'newwws_app:news' %}">
+            <form method="post" href="{% url 'newwws_app:news' %}">
             {% csrf_token %}
                 <!-- Search widget-->
                 <div class="card my-4">
                     <h5 class="card-header">Search</h5>
                     <div class="card-body">
                         <div class="input-group">
-                            <input id="querySearch" name="search" class="form-control" type="text" placeholder="Key word..." minlength="1" pattern="[0-9a-zA-Z]{0-1000}" aria-describedby="queryHelpInline" value="{{value_input}}" required/>
+                            <input id="querySearch" name="search" class="form-control" type="text" placeholder="Key word..." minlength="1" pattern="[0-9a-zA-Z]{0-1000}" aria-describedby="queryHelpInline" value="{{value_input}}" required >
                         </div>
                         <small id="queryHelpInline" class="text-muted">
                             <i class="fas fa-info-circle"></i> Must have 1 character.
@@ -50,7 +50,7 @@
                         <div class="row d-flex flex-column justify-content-around align-items-start ml-2">
                             {% for preference in SORTBY %}
                                 <div class="form-check">
-                                    <input id="querySortBy" class="form-check-input" type="radio" name="shortBy" id="{{preference}}" value="{{preference}}">
+                                    <input id="querySortBy" class="form-check-input" type="radio" name="shortBy" value="{{preference}}">
                                     <label class="form-check-label" for="{{preference}}">
                                         {% if preference == 'publishedAt' %}
                                             Date
@@ -84,7 +84,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button class="btn btn-primary" href="" disabled>Subscribe</a>
+                                    <button type="button" class="btn btn-primary" href="" disabled>Subscribe</button>
                                 </div>
                                 </div>
                             </div>
@@ -118,7 +118,7 @@
                         <div class="row d-flex flex-column justify-content-around align-items-start ml-2">
                             {% for language in LANGUAGES %}
                                 <div class="form-check">
-                                    <input id="queryLanguage" class="form-check-input" type="radio" name="language" id="{{language}}" value="{{language}}">
+                                    <input id="queryLanguage" class="form-check-input" type="radio" name="language" value="{{language}}">
                                     <label class="form-check-label" for="{{language}}">
                                         {% if language == 'ar' %}
                                             Arabic

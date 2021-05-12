@@ -10,7 +10,7 @@
         <div class="masthead-subheading">Welcome To Newwws !</div>
         <div class="masthead-heading text-uppercase">The world's leading news search application</div>
         <!-- <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Get started <i class="fas fa-chevron-right fa-lg"></i></a> -->
-        <form method="POST" href="{% url 'newwws_app:index' %}">
+        <form method="post" href="{% url 'newwws_app:index' %}">
             {% csrf_token %}
             <div class="custom-control custom-switch my-4">
                 <input id="queryDailyNews" type="checkbox" class="custom-control-input" name="mode">
@@ -20,7 +20,6 @@
                 <input id="querySearch" type="text" class="control-form mr-1" name="query" placeholder="Key word ..." style="border-radius:5px; border-color:white; width:300px">
                 <button id="querySubmit" type="submit" class="btn btn-dark" style="background-color: #E26845; border-color:#E26845"><i class="fas fa-search"></i></button>
             </div>
-            
         </form>
         {% if messages %}
         <div class="alert-message-app d-flex flex-column justify-content-center align-items-center">
@@ -78,7 +77,7 @@
         </div>
         <ul class="timeline">
             <li>
-                <div class="timeline-image"><img class="rounded-circle img-fluid" src="{% static 'img/about/1.jpg' %}" alt="..." /></div>
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="{% static 'img/about/1.jpg' %}" alt="..."></div>
                 <div class="timeline-panel">
                     <div class="timeline-heading">
                         <h4>2019-2020</h4>
@@ -88,7 +87,7 @@
                 </div>
             </li>
             <li class="timeline-inverted">
-                <div class="timeline-image"><img class="rounded-circle img-fluid" src="{% static 'img/about/2.jpg' %}" alt="..." /></div>
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="{% static 'img/about/2.jpg' %}" alt="..."></div>
                 <div class="timeline-panel">
                     <div class="timeline-heading">
                         <h4>2021</h4>
@@ -98,7 +97,7 @@
                 </div>
             </li>
             <li>
-                <div class="timeline-image"><img class="rounded-circle img-fluid" src="{% static 'img/about/3.jpg' %}" alt="..." /></div>
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="{% static 'img/about/3.jpg' %}" alt="..."></div>
                 <div class="timeline-panel">
                     <div class="timeline-heading">
                         <h4>2021-2022</h4>
@@ -111,9 +110,9 @@
                 <div class="timeline-image">
                     <h4>
                         Let's
-                        <br />
+                        <br>
                         LIGHT
-                        <br />
+                        <br>
                         the world!
                     </h4>
                 </div>
@@ -131,14 +130,14 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="team-member">
-                    <img class="mx-auto rounded-circle" src="{% static 'img/team/1.jpg' %}" alt="picture Gontrand" />
+                    <img class="mx-auto rounded-circle" src="{% static 'img/team/1.jpg' %}" alt="picture Gontrand">
                     <h4>Gontrand Daudré</h4>
                     <p class="text-muted">Lead Developer</p>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="team-member">
-                    <img class="mx-auto rounded-circle" src="{% static 'img/team/2.jpg' %}" alt="picture robert" />
+                    <img class="mx-auto rounded-circle" src="{% static 'img/team/2.jpg' %}" alt="picture robert">
                     <h4>Robert Dupont</h4>
                     <p class="text-muted">Lead Journalist</p>
                 </div>
@@ -154,16 +153,16 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-3 col-sm-6 my-3">
-                <a href=""><img class="img-fluid img-brand d-block mx-auto" src="{% static 'img/logos/new-york-times.svg' %}" alt="logo nyt" /></a>
+                <a href=""><img class="img-fluid img-brand d-block mx-auto" src="{% static 'img/logos/new-york-times.svg' %}" alt="logo nyt"></a>
             </div>
             <div class="col-md-3 col-sm-6 my-3">
-                <a href=""><img class="img-fluid img-brand d-block mx-auto" src="{% static 'img/logos/le-monde.svg' %}" alt="logo le monde" /></a>
+                <a href=""><img class="img-fluid img-brand d-block mx-auto" src="{% static 'img/logos/le-monde.svg' %}" alt="logo le monde"></a>
             </div>
             <div class="col-md-3 col-sm-6 my-3">
-                <a href=""><img class="img-fluid img-brand d-block mx-auto" src="{% static 'img/logos/frankfurter-allgemeine.svg' %}" alt="logo frankfurter" /></a>
+                <a href=""><img class="img-fluid img-brand d-block mx-auto" src="{% static 'img/logos/frankfurter-allgemeine.svg' %}" alt="logo frankfurter"></a>
             </div>
             <div class="col-md-3 col-sm-6 my-3">
-                <img class="img-fluid img-brand d-block mx-auto" src="{% static 'img/logos/the-guardian.svg' %}" alt="logo guardian" />
+                <img class="img-fluid img-brand d-block mx-auto" src="{% static 'img/logos/the-guardian.svg' %}" alt="logo guardian">
             </div>
         </div>
     </div>
@@ -179,15 +178,15 @@
             <div class="row align-items-stretch mb-5">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input class="form-control" id="name" type="text" placeholder="Your Name *" required="required" data-validation-required-message="Please enter your name." />
+                        <input class="form-control" id="name" type="text" placeholder="Your Name *" required="required" data-validation-required-message="Please enter your name.">
                         <p class="help-block text-danger"></p>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" id="email" type="email" placeholder="Your Email *" required="required" data-validation-required-message="Please enter your email address." />
+                        <input class="form-control" id="email" type="email" placeholder="Your Email *" required="required" data-validation-required-message="Please enter your email address.">
                         <p class="help-block text-danger"></p>
                     </div>
                     <div class="form-group mb-md-0">
-                        <input class="form-control" id="phone" type="tel" placeholder="Your Phone *" required="required" data-validation-required-message="Please enter your phone number." />
+                        <input class="form-control" id="phone" type="tel" placeholder="Your Phone *" required="required" data-validation-required-message="Please enter your phone number.">
                         <p class="help-block text-danger"></p>
                     </div>
                 </div>

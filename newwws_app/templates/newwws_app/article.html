@@ -34,13 +34,13 @@
                 by {{article.article.author}}
             </p>
             {% endif %}
-            <hr />
+            <hr>
             <!-- Date and time-->
             <p>Posted on {{article.article.published_at}}</p>
-            <hr />
+            <hr>
             <!-- Preview image-->
-            <img class="img-fluid rounded" src="{{article.article.url_to_image}}" alt="..." />
-            <hr />
+            <img class="img-fluid rounded" src="{{article.article.url_to_image}}" alt="...">
+            <hr>
             <!-- Post content-->
             <p class="lead">{{article.article.content}}</p>
             <div class="d-flex flex-row justify-content-center">
@@ -62,7 +62,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" href="" disabled>Subscribe</a>
+                        <button type="button" class="btn btn-primary" href="" disabled>Subscribe</button>
                     </div>
                     </div>
                 </div>
@@ -71,23 +71,23 @@
         <div class="col-lg-2 my-4">
             <div class="features-article">
                 <!-- Saved management -->
-                <form action="{% url 'newwws_app:saved' %}" method="POST">
+                <form action="{% url 'newwws_app:saved' %}" method="post">
                 {% csrf_token %}
                     <input type="hidden" name="current_article" value="{{article.article.id}}">
                     <input type="hidden" name="delete" value="foo">
-                    <button id="delete-{{article.id}}" type="submit" class="btn btn-danger mx-2"><i class="fas fa-trash fa-lg"></i></a>
+                    <button id="delete-{{article.id}}" type="submit" class="btn btn-danger mx-2"><i class="fas fa-trash fa-lg"></i></button>
                 </form>
 
                 <!-- Status read management -->
-                <form action="{% url 'newwws_app:saved' %}" method="POST">
+                <form action="{% url 'newwws_app:saved' %}" method="post">
                 {% csrf_token %}
                     <input type="hidden" name="current_article" value="{{article.article.id}}">
                     {% if article.read %}
                         <input type="hidden" name="read" value="False">
-                        <button id="read-{{article.id}}" type="submit" class="btn btn-success mx-2"><i class="fas fa-bookmark fa-lg"></i></a>
+                        <button id="read-{{article.id}}" type="submit" class="btn btn-success mx-2"><i class="fas fa-bookmark fa-lg"></i></button>
                     {% else %}
                         <input type="hidden" name="read" value="True">
-                        <button id="read-{{article.id}}" type="submit" class="btn btn-secondary mx-2"><i class="fas fa-bookmark fa-lg"></i></a>
+                        <button id="read-{{article.id}}" type="submit" class="btn btn-secondary mx-2"><i class="fas fa-bookmark fa-lg"></i></button>
                     {% endif %}
                 </form>
             </div>

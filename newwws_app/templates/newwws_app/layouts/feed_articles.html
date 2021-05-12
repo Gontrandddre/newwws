@@ -6,9 +6,9 @@
     {% for article in articles %}
         <div class="card mb-4">
             {% if article.urlToImage %}
-                <img class="card-img-top" src="{{article.urlToImage}}" alt="image article" />
+                <img class="card-img-top" src="{{article.urlToImage}}" alt="image article">
             {% else %}
-                <img class="card-img-top" src="https://picsum.photos/200/100/?blur" alt="image by default article" />
+                <img class="card-img-top" src="https://picsum.photos/200/100/?blur" alt="image by default article">
             {% endif %}
             <div class="card-body">
                 {% if article.title %}
@@ -19,7 +19,7 @@
                 {% endif %}
                 <div class="d-flex flex-row justify-content-end align-items-center">
                     {% if article.content %}
-                        <button class="btn btn-primary rounded-circle mx-2 featureArticle btn-read-article-{{forloop.counter}}" data-toggle="modal" data-target="#modal-article-content-{{forloop.counter}}"><i class="fas fa-eye fa-lg"></i></button>
+                        <button type="button" class="btn btn-primary rounded-circle mx-2 featureArticle btn-read-article-{{forloop.counter}}" data-toggle="modal" data-target="#modal-article-content-{{forloop.counter}}"><i class="fas fa-eye fa-lg"></i></button>
                         <!-- Modal content -->
                         <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal-article-content-{{forloop.counter}}" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
@@ -33,33 +33,32 @@
                                                     <h1 class="col-lg-0 mt-4">{{article.title}}</h1>
                                                     <!-- save article -->
                                                     {% if user.is_authenticated %}
-                                                        <form action="{% url nameUrlPattern %}" method="POST">
+                                                        <form action="{% url nameUrlPattern %}" method="post">
                                                             {% csrf_token %}
                                                             <input type="hidden" name="save" value="{{article.title}}">
-                                                            <button id="save-{{article.title}}" type="submit" class="btn btn-success mx-2"><i class="fas fa-save fa-lg"></i></a>
+                                                            <button type="submit" id="save-{{article.title}}" class="btn btn-success mx-2"><i class="fas fa-save fa-lg"></i></button>
                                                         </form>
                                                     {% endif %}
                                                 </div>
-                                                
                                                 {% if article.author %}
                                                 <!-- Author-->
                                                 <p class="lead">
                                                     by {{article.author}}
                                                 </p>
                                                 {% endif %}
-                                                <hr />
+                                                <hr>
                                                 <!-- Date and time-->
                                                 <p>Posted on {{article.publishedAt}}</p>
-                                                <hr />
+                                                <hr>
                                                 <!-- Preview image-->
                                                 {% if article.urlToImage %}
-                                                    <img class="card-img-top" src="{{article.urlToImage}}" alt="image article" />
+                                                    <img class="card-img-top" src="{{article.urlToImage}}" alt="image article">
                                                 {% else %}
-                                                    <img class="card-img-top" src="https://picsum.photos/200/100/?blur" alt="image by default article" />
+                                                    <img class="card-img-top" src="https://picsum.photos/200/100/?blur" alt="image by default article">
                                                 {% endif %}
-                                                <hr />
+                                                <hr>
                                                 <!-- Post content-->
-                                                {{article.content}} <i class="fas fa-star text-primary"></i>                                                
+                                                {{article.content}} <i class="fas fa-star text-primary"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -69,7 +68,7 @@
                     {% endif %}
                     <a class="btn btn-info rounded-circle mx-2 featureArticle urlArticle" href="{{article.url}}" target="_blank"><i class="fas fa-mouse-pointer fa-lg"></i></a>
                     {% if user.is_authenticated %}
-                        <form action="{% url nameUrlPattern %}" method="POST">
+                        <form action="{% url nameUrlPattern %}" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="save" value="{{article.title}}">
                             <button id="save-{{article.title}}" type="submit" class="btn btn-success rounded-circle mx-2 featureArticle btn-save-article-{{forloop.counter}}"><i class="fas fa-save fa-lg"></i></button>
@@ -103,7 +102,6 @@
                 {% if article.publishedAt %}
                     {{ article.publishedAt|date_format }}
                 {% endif %}
-                
                 {% if article.author %}
                    | by {{article.author}}
                 {% endif %}
